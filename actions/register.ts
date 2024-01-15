@@ -6,6 +6,7 @@ import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
 import { RegisterSchema } from "@/schemas";
 import { getUserByEmail } from "@/data/user";
+import { login } from "./login";
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
   const validatedFields = RegisterSchema.safeParse(values);
@@ -31,7 +32,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     },
   });
 
-  return {
-    success: "User created!",
-  };
+  await login({ email, password }).then((data) => {
+    return { success: "User created!" };
+  });
 };
