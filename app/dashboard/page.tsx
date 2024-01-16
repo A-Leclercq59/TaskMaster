@@ -1,6 +1,6 @@
 import { auth, signOut } from "@/auth";
 
-const HomePage = async () => {
+const DashboardPage = async () => {
   const session = await auth();
 
   return (
@@ -19,4 +19,4 @@ const HomePage = async () => {
   );
 };
 
-export default HomePage;
+export default DashboardPage;
