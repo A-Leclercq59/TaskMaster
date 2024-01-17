@@ -9,7 +9,7 @@ import { CalendarIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-import { CreateTaskSchema } from "@/schemas";
+import { EditTaskSchema } from "@/schemas";
 import { Input } from "@/components/ui/input";
 import {
   Form,
@@ -30,28 +30,34 @@ import {
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
 import { Switch } from "@/components/ui/switch";
-import { createTask } from "@/actions/create-task";
+import { Task } from "@prisma/client";
+import { editTask } from "@/actions/edit-task";
 
-export const CreateTaskForm = () => {
+interface EditTaskFormProps {
+  task: Task;
+}
+
+export const EditTaskForm = ({ task }: EditTaskFormProps) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
-  const form = useForm<z.infer<typeof CreateTaskSchema>>({
-    resolver: zodResolver(CreateTaskSchema),
+  const form = useForm<z.infer<typeof EditTaskSchema>>({
+    resolver: zodResolver(EditTaskSchema),
     defaultValues: {
-      title: "",
-      description: undefined,
-      date: undefined,
-      isImportant: false,
+      title: task.title || undefined,
+      description: task.description || undefined,
+      date: task.date || undefined,
+      isImportant: task.isImportant || undefined,
+      isCompleted: task.isCompleted || undefined,
     },
   });
 
-  const onSubmit = (values: z.infer<typeof CreateTaskSchema>) => {
+  const onSubmit = (values: z.infer<typeof EditTaskSchema>) => {
     values.date = new Date(formatISO(values.date, { representation: "date" }));
 
     startTransition(() => {
-      createTask(values).then((data) => {
+      editTask(values, task.id).then((data) => {
         if (data.success) {
           toast(data.success);
           router.refresh();
@@ -164,9 +170,30 @@ export const CreateTaskForm = () => {
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="isCompleted"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+                  <div>
+                    <FormLabel>Completed</FormLabel>
+                    <FormDescription>
+                      Enable if your task is completed
+                    </FormDescription>
+                  </div>
+                  <FormControl>
+                    <Switch
+                      disabled={isPending}
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
           </div>
           <Button type="submit" className="w-full" disabled={isPending}>
-            Create
+            Edit
           </Button>
         </form>
       </Form>

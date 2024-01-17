@@ -7,6 +7,8 @@ import { Task } from "@prisma/client";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Badge } from "../ui/badge";
 import { cn } from "@/lib/utils";
+import { ModalWrapper } from "../modal-wrapper";
+import { EditTaskForm } from "./edit-form";
 
 interface TaskItemProps {
   task: Task;
@@ -46,7 +48,9 @@ export const TaskItem = ({ task }: TaskItemProps) => {
                 </span>
               </Badge>
               <div className="flex items-center gap-2">
-                <LuFileEdit className="h-5 w-5" />
+                <ModalWrapper headerLabel="Edit a task" type="Edit">
+                  <EditTaskForm task={task} />
+                </ModalWrapper>
                 <MdDelete className="h-6 w-6" />
               </div>
             </div>

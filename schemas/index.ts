@@ -29,3 +29,13 @@ export const CreateTaskSchema = z.object({
   date: z.date(),
   isImportant: z.boolean(),
 });
+
+export const EditTaskSchema = z.object({
+  title: z.string().min(1, {
+    message: "Title is required",
+  }),
+  description: z.optional(z.string()),
+  date: z.date(),
+  isImportant: z.optional(z.boolean()),
+  isCompleted: z.optional(z.boolean()),
+});

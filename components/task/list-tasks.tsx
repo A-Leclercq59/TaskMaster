@@ -29,7 +29,7 @@ export const ListTasks = async ({
       {tasks?.map((task, index) => (
         <TaskItem key={index} task={task} />
       ))}
-      <ModalWrapper headerLabel="Create a Task">
+      <ModalWrapper headerLabel="Create a Task" type="Create">
         <CreateTaskForm />
       </ModalWrapper>
     </div>

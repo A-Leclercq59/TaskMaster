@@ -11,8 +11,6 @@ import { UserAvatar } from "../user-avatar";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "../theme/ThemeToggle";
 import { LogoutButton } from "../auth/logout-button";
-import { ModalWrapper } from "../modal-wrapper";
-import { CreateTaskForm } from "../task/create-form";
 
 const navigationList = [
   {

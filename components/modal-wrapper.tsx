@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { LuFileEdit } from "react-icons/lu";
 
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { Button } from "@/components/ui/button";
@@ -25,9 +26,14 @@ import { CardTaskCreate } from "./task/card-task-create";
 interface ModalWrapperProps {
   children: React.ReactNode;
   headerLabel: string;
+  type: "Create" | "Edit";
 }
 
-export const ModalWrapper = ({ children, headerLabel }: ModalWrapperProps) => {
+export const ModalWrapper = ({
+  children,
+  headerLabel,
+  type,
+}: ModalWrapperProps) => {
   const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
@@ -35,7 +41,10 @@ export const ModalWrapper = ({ children, headerLabel }: ModalWrapperProps) => {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger>
-          <CardTaskCreate />
+          {type === "Create" && <CardTaskCreate />}
+          {type === "Edit" && (
+            <LuFileEdit className="h-5 w-5 hover:text-primary" />
+          )}
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
@@ -50,7 +59,10 @@ export const ModalWrapper = ({ children, headerLabel }: ModalWrapperProps) => {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger>
-        <CardTaskCreate />
+        {type === "Create" && <CardTaskCreate />}
+        {type === "Edit" && (
+          <LuFileEdit className="h-5 w-5 hover:text-primary" />
+        )}
       </DrawerTrigger>
       <DrawerContent className="p-4">
         <DrawerHeader className="text-left">
