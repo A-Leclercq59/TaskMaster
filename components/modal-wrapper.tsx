@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { LuFileEdit } from "react-icons/lu";
+import { MdDelete } from "react-icons/md";
 
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { Button } from "@/components/ui/button";
@@ -26,7 +27,7 @@ import { CardTaskCreate } from "./task/card-task-create";
 interface ModalWrapperProps {
   children: React.ReactNode;
   headerLabel: string;
-  type: "Create" | "Edit";
+  type: "Create" | "Edit" | "Delete";
 }
 
 export const ModalWrapper = ({

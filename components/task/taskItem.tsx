@@ -1,14 +1,12 @@
 "use client";
 
-import { LuFileEdit } from "react-icons/lu";
-import { MdDelete } from "react-icons/md";
-
 import { Task } from "@prisma/client";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Badge } from "../ui/badge";
 import { cn } from "@/lib/utils";
 import { ModalWrapper } from "../modal-wrapper";
 import { EditTaskForm } from "./edit-form";
+import { DeleteTaskDialog } from "./delete-task-dialog";
 
 interface TaskItemProps {
   task: Task;
@@ -51,7 +49,7 @@ export const TaskItem = ({ task }: TaskItemProps) => {
                 <ModalWrapper headerLabel="Edit a task" type="Edit">
                   <EditTaskForm task={task} />
                 </ModalWrapper>
-                <MdDelete className="h-6 w-6" />
+                <DeleteTaskDialog taskId={task.id} />
               </div>
             </div>
           </div>
