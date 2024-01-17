@@ -1,6 +1,7 @@
 "use server";
 
 import * as z from "zod";
+import { revalidatePath } from "next/cache";
 
 import { db } from "@/lib/db";
 import { CreateTaskSchema } from "@/schemas";
@@ -30,13 +31,15 @@ export const createTask = async (values: z.infer<typeof CreateTaskSchema>) => {
 
   await db.task.create({
     data: {
-      userId: dbUser.id,
+      userId: user.id,
       title,
       description,
       date,
       isImportant,
     },
   });
+
+  revalidatePath("/dashboard");
 
   return {
     success: "Task created!",

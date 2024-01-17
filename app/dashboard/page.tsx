@@ -1,22 +1,7 @@
-import { auth, signOut } from "@/auth";
+import { ListTasks } from "@/components/task/list-tasks";
 
 const DashboardPage = async () => {
-  const session = await auth();
-
-  return (
-    <div>
-      {JSON.stringify(session)}
-      <form
-        action={async () => {
-          "use server";
-
-          await signOut();
-        }}
-      >
-        <button type="submit">Sign Out</button>
-      </form>
-    </div>
-  );
+  return <ListTasks isCompleted={false} />;
 };
 
 export default DashboardPage;

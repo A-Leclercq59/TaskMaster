@@ -20,26 +20,22 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import { CardTaskCreate } from "./task/card-task-create";
 
 interface ModalWrapperProps {
   children: React.ReactNode;
-  buttonTriggerLabel: string;
   headerLabel: string;
 }
 
-export const ModalWrapper = ({
-  children,
-  headerLabel,
-  buttonTriggerLabel,
-}: ModalWrapperProps) => {
+export const ModalWrapper = ({ children, headerLabel }: ModalWrapperProps) => {
   const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   if (isDesktop) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-          <Button variant="outline">{buttonTriggerLabel}</Button>
+        <DialogTrigger>
+          <CardTaskCreate />
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
@@ -53,8 +49,8 @@ export const ModalWrapper = ({
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger asChild>
-        <Button variant="outline">{buttonTriggerLabel}</Button>
+      <DrawerTrigger>
+        <CardTaskCreate />
       </DrawerTrigger>
       <DrawerContent className="p-4">
         <DrawerHeader className="text-left">

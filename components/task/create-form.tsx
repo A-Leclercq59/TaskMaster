@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format, formatISO } from "date-fns";
 import { CalendarIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 import { CreateTaskSchema } from "@/schemas";
 import { Input } from "@/components/ui/input";
@@ -31,6 +32,8 @@ import { Switch } from "@/components/ui/switch";
 import { createTask } from "@/actions/create-task";
 
 export const CreateTaskForm = () => {
+  const router = useRouter();
+
   const [isPending, startTransition] = useTransition();
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
@@ -45,13 +48,12 @@ export const CreateTaskForm = () => {
   });
 
   const onSubmit = (values: z.infer<typeof CreateTaskSchema>) => {
-    console.log(formatISO(values.date, { representation: "date" }));
-
     values.date = new Date(formatISO(values.date, { representation: "date" }));
 
     startTransition(() => {
       createTask(values).then((data) => {
         if (data.success) {
+          router.refresh();
           console.log(data.success);
         }
       });

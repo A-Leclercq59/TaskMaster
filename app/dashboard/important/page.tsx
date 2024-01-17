@@ -1,15 +1,7 @@
-import { ModalWrapper } from "@/components/modal-wrapper";
-import { CreateTaskForm } from "@/components/task/create-form";
+import { ListTasks } from "@/components/task/list-tasks";
 
 const ImportantPage = () => {
-  return (
-    <div>
-      Important Page
-      <ModalWrapper buttonTriggerLabel="Click me" headerLabel="Create a Task">
-        <CreateTaskForm />
-      </ModalWrapper>
-    </div>
-  );
+  return <ListTasks isImportant isCompleted={false} />;
 };
 
 export default ImportantPage;

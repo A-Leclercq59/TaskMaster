@@ -6,7 +6,7 @@ const DashBoardLayout = ({ children }: { children: React.ReactNode }) => {
       <div className="w-64 flex mr-10">
         <SideBar />
       </div>
-      <div className="flex-1 border bg-primary-foreground rounded-xl shadow-md p-6">
+      <div className="flex-1 border bg-primary-foreground rounded-xl shadow-md p-6 overflow-auto h-auto">
         {children}
       </div>
     </div>

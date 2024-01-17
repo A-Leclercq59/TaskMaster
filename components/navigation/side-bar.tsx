@@ -11,6 +11,8 @@ import { UserAvatar } from "../user-avatar";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "../theme/ThemeToggle";
 import { LogoutButton } from "../auth/logout-button";
+import { ModalWrapper } from "../modal-wrapper";
+import { CreateTaskForm } from "../task/create-form";
 
 const navigationList = [
   {
@@ -32,10 +34,10 @@ const navigationList = [
     targetSegment: "completed",
   },
   {
-    label: "Do It Now",
+    label: "Do It Today",
     icon: <FaClipboardList className="h-5 w-5" />,
-    path: "/dashboard/now",
-    targetSegment: "now",
+    path: "/dashboard/today",
+    targetSegment: "today",
   },
 ];
 
