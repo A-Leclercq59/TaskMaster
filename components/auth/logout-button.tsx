@@ -10,7 +10,7 @@ export const LogoutButton = () => {
     <Button
       variant="link"
       onClick={() => logout()}
-      className="flex flex-row items-center gap-x-2 text-white hover:text-red-600"
+      className="flex flex-row items-center gap-x-2 dark:text-white hover:text-red-600"
     >
       <MdLogout className="h-5 w-5" />
       Sign Out
