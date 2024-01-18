@@ -45,7 +45,7 @@ export const DeleteTaskDialog = ({ taskId }: DeleteTaskDialogProps) => {
             className="flex gap-3"
             action={async () => {
               await deleteTask(taskId).then((data) => {
-                toast(data.success);
+                toast(data?.success);
                 onClose();
               });
             }}
