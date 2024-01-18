@@ -2,7 +2,8 @@ import { currentUser } from "@/lib/auth";
 import { getTasksByUserId } from "@/data/task";
 import { TaskItem } from "./taskItem";
 import { ModalWrapper } from "../modal-wrapper";
-import { CreateTaskForm } from "./create-form";
+import { CreateTaskForm } from "./create-task-form";
+import { CardCreateTask } from "./card-create-task";
 
 interface ListTasksProps {
   isImportant?: boolean;
@@ -29,9 +30,7 @@ export const ListTasks = async ({
       {tasks?.map((task, index) => (
         <TaskItem key={index} task={task} />
       ))}
-      <ModalWrapper headerLabel="Create a Task" type="Create">
-        <CreateTaskForm />
-      </ModalWrapper>
+      <CardCreateTask />
     </div>
   );
 };

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -35,9 +35,10 @@ import { editTask } from "@/actions/edit-task";
 
 interface EditTaskFormProps {
   task: Task;
+  onClose: () => void;
 }
 
-export const EditTaskForm = ({ task }: EditTaskFormProps) => {
+export const EditTaskForm = ({ task, onClose }: EditTaskFormProps) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
@@ -45,13 +46,23 @@ export const EditTaskForm = ({ task }: EditTaskFormProps) => {
   const form = useForm<z.infer<typeof EditTaskSchema>>({
     resolver: zodResolver(EditTaskSchema),
     defaultValues: {
-      title: task.title || undefined,
-      description: task.description || undefined,
-      date: task.date || undefined,
-      isImportant: task.isImportant || undefined,
-      isCompleted: task.isCompleted || undefined,
+      title: "",
+      description: "",
+      date: undefined,
+      isImportant: undefined,
+      isCompleted: undefined,
     },
   });
+
+  useEffect(() => {
+    if (task) {
+      form.setValue("title", task.title);
+      form.setValue("description", task.description || "");
+      form.setValue("date", task.date);
+      form.setValue("isImportant", task.isImportant);
+      form.setValue("isCompleted", task.isCompleted);
+    }
+  }, [task, form]);
 
   const onSubmit = (values: z.infer<typeof EditTaskSchema>) => {
     values.date = new Date(formatISO(values.date, { representation: "date" }));
@@ -61,6 +72,7 @@ export const EditTaskForm = ({ task }: EditTaskFormProps) => {
         if (data.success) {
           toast(data.success);
           router.refresh();
+          onClose();
         }
       });
     });

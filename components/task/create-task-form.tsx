@@ -32,7 +32,11 @@ import { cn } from "@/lib/utils";
 import { Switch } from "@/components/ui/switch";
 import { createTask } from "@/actions/create-task";
 
-export const CreateTaskForm = () => {
+interface CreateTaskForm {
+  onClose: () => void;
+}
+
+export const CreateTaskForm = ({ onClose }: CreateTaskForm) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
@@ -55,6 +59,7 @@ export const CreateTaskForm = () => {
         if (data.success) {
           toast(data.success);
           router.refresh();
+          onClose();
         }
       });
     });

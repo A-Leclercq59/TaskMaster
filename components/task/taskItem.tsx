@@ -4,16 +4,18 @@ import { Task } from "@prisma/client";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Badge } from "../ui/badge";
 import { cn } from "@/lib/utils";
-import { ModalWrapper } from "../modal-wrapper";
-import { EditTaskForm } from "./edit-form";
 import { DeleteTaskDialog } from "./delete-task-dialog";
+import { LuFileEdit } from "react-icons/lu";
+
+import { useModal } from "@/hooks/use-modal-store";
 
 interface TaskItemProps {
   task: Task;
 }
 
 export const TaskItem = ({ task }: TaskItemProps) => {
-  const { title, description, date, isImportant, isCompleted } = task;
+  const { title, description, date, isCompleted } = task;
+  const { onOpen } = useModal();
 
   const formattedDate = date.toLocaleDateString("en-GB", {
     weekday: "short",
@@ -46,9 +48,10 @@ export const TaskItem = ({ task }: TaskItemProps) => {
                 </span>
               </Badge>
               <div className="flex items-center gap-2">
-                <ModalWrapper headerLabel="Edit a task" type="Edit">
-                  <EditTaskForm task={task} />
-                </ModalWrapper>
+                <LuFileEdit
+                  className="h-5 w-5 hover:text-primary cursor-pointer"
+                  onClick={() => onOpen("editTask", { task })}
+                />
                 <DeleteTaskDialog taskId={task.id} />
               </div>
             </div>

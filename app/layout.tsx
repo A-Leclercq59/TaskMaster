@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/sonner";
 
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
+import { ModalProvider } from "@/providers/modal-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,6 +28,7 @@ export default async function RootLayout({
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <SessionProvider session={session}>
+            <ModalProvider />
             {children}
             <Toaster />
           </SessionProvider>

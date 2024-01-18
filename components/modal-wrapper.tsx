@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { LuFileEdit } from "react-icons/lu";
-import { MdDelete } from "react-icons/md";
 
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { Button } from "@/components/ui/button";
@@ -22,7 +21,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { CardTaskCreate } from "./task/card-task-create";
+import { CardCreateTask } from "./task/card-create-task";
 
 interface ModalWrapperProps {
   children: React.ReactNode;
@@ -42,7 +41,7 @@ export const ModalWrapper = ({
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger>
-          {type === "Create" && <CardTaskCreate />}
+          {type === "Create" && <CardCreateTask />}
           {type === "Edit" && (
             <LuFileEdit className="h-5 w-5 hover:text-primary" />
           )}
@@ -60,7 +59,7 @@ export const ModalWrapper = ({
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger>
-        {type === "Create" && <CardTaskCreate />}
+        {type === "Create" && <CardCreateTask />}
         {type === "Edit" && (
           <LuFileEdit className="h-5 w-5 hover:text-primary" />
         )}

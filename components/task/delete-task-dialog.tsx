@@ -6,7 +6,6 @@ import { MdDelete } from "react-icons/md";
 
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
@@ -23,6 +22,10 @@ interface DeleteTaskDialogProps {
 
 export const DeleteTaskDialog = ({ taskId }: DeleteTaskDialogProps) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const onClose = () => {
+    setIsOpen(false);
+  };
 
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
@@ -43,11 +46,13 @@ export const DeleteTaskDialog = ({ taskId }: DeleteTaskDialogProps) => {
             action={async () => {
               await deleteTask(taskId).then((data) => {
                 toast(data.success);
-                setIsOpen(false);
+                onClose();
               });
             }}
           >
-            <Button variant="outline">Cancel</Button>
+            <Button variant="outline" type="button" onClick={onClose}>
+              Cancel
+            </Button>
             <Button variant="destructive" type="submit">
               Delete
             </Button>
