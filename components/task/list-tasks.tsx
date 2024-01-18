@@ -26,7 +26,7 @@ export const ListTasks = async ({
   });
 
   return (
-    <div className="flex flex-wrap justify-stretch overflow-auto h-auto gap-4">
+    <div className="flex flex-wrap justify-stretch h-auto gap-4">
       {tasks?.map((task, index) => (
         <TaskItem key={index} task={task} />
       ))}

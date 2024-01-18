@@ -13,7 +13,7 @@ export const LogoutButton = () => {
       className="flex flex-row items-center gap-x-2 dark:text-white hover:text-red-600"
     >
       <MdLogout className="h-5 w-5" />
-      Sign Out
+      <span className="max-md:hidden">Sign Out</span>
     </Button>
   );
 };

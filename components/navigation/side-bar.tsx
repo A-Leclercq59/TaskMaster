@@ -7,7 +7,6 @@ import { FaClipboardList } from "react-icons/fa";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 
-import { UserAvatar } from "../user-avatar";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "../theme/ThemeToggle";
 import { LogoutButton } from "../auth/logout-button";
@@ -44,10 +43,6 @@ export const SideBar = () => {
 
   return (
     <div className="w-full bg-primary-foreground items-center flex border rounded-xl shadow-md py-4 h-full flex-col">
-      <div>
-        <UserAvatar />
-        <ThemeToggle />
-      </div>
       <div className="flex items-center h-full w-full">
         <nav className="w-full">
           <ol className="space-y-2">
@@ -64,14 +59,15 @@ export const SideBar = () => {
                   className="flex flex-row items-center gap-5 py-2 px-4"
                 >
                   {navigation.icon}
-                  {navigation.label}
+                  <span className="max-md:hidden">{navigation.label}</span>
                 </Link>
               </li>
             ))}
           </ol>
         </nav>
       </div>
-      <div className="mb-2">
+      <div className="flex flex-col items-center mb-2 ">
+        <ThemeToggle />
         <LogoutButton />
       </div>
     </div>
