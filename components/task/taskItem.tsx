@@ -25,7 +25,7 @@ export const TaskItem = ({ task }: TaskItemProps) => {
   });
 
   return (
-    <Card className="w-[350px] min-h-[270px] flex flex-col">
+    <Card className="w-full md:w-[350px] min-h-[270px] flex flex-col">
       <CardHeader>
         <CardTitle className="text-lg font-bold">{title}</CardTitle>
       </CardHeader>

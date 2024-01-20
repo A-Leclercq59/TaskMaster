@@ -59,7 +59,7 @@ export const SideBar = () => {
                   className="flex flex-row items-center gap-5 py-2 px-4"
                 >
                   {navigation.icon}
-                  <span className="max-md:hidden">{navigation.label}</span>
+                  <span className="hidden md:flex">{navigation.label}</span>
                 </Link>
               </li>
             ))}

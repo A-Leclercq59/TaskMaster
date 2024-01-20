@@ -1,20 +1,20 @@
 import { currentUser } from "@/lib/auth";
 import { getTasksByUserId } from "@/data/task";
 import { TaskItem } from "./taskItem";
-import { ModalWrapper } from "../modal-wrapper";
-import { CreateTaskForm } from "./create-task-form";
 import { CardCreateTask } from "./card-create-task";
 
 interface ListTasksProps {
   isImportant?: boolean;
   isCompleted?: boolean;
   doItNow?: boolean;
+  title?: string;
 }
 
 export const ListTasks = async ({
   isImportant,
   isCompleted,
   doItNow,
+  title,
 }: ListTasksProps) => {
   const user = await currentUser();
 
@@ -26,11 +26,16 @@ export const ListTasks = async ({
   });
 
   return (
-    <div className="flex flex-wrap justify-stretch h-auto gap-4">
-      {tasks?.map((task, index) => (
-        <TaskItem key={index} task={task} />
-      ))}
-      <CardCreateTask />
+    <div>
+      <div className="md:hidden text-3xl font-bold text-center mb-3">
+        {title}
+      </div>
+      <div className="flex flex-wrap justify-stretch h-auto gap-4">
+        {tasks?.map((task, index) => (
+          <TaskItem key={index} task={task} />
+        ))}
+        <CardCreateTask />
+      </div>
     </div>
   );
 };

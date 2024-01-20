@@ -140,7 +140,6 @@ export const CreateTaskForm = ({ onClose }: CreateTaskForm) => {
                           field.onChange(e);
                           setIsCalendarOpen(false);
                         }}
-                        initialFocus
                       />
                     </PopoverContent>
                   </Popover>

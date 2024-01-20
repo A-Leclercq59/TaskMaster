@@ -1,7 +1,7 @@
 import { ListTasks } from "@/components/task/list-tasks";
 
 const ImportantPage = () => {
-  return <ListTasks isImportant isCompleted={false} />;
+  return <ListTasks title="Important" isImportant isCompleted={false} />;
 };
 
 export default ImportantPage;

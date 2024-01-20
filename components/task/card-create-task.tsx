@@ -10,7 +10,7 @@ export const CardCreateTask = () => {
 
   return (
     <Card
-      className="w-[350px] min-h-[270px] flex items-center justify-center bg-primary-foreground shadow-md cursor-pointer"
+      className="w-full md:w-[350px] min-h-[270px] flex items-center justify-center bg-primary-foreground shadow-md cursor-pointer"
       onClick={() => onOpen("createTask")}
     >
       <CardContent className="flex items-center gap-2">

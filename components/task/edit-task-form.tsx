@@ -153,7 +153,6 @@ export const EditTaskForm = ({ task, onClose }: EditTaskFormProps) => {
                           field.onChange(e);
                           setIsCalendarOpen(false);
                         }}
-                        initialFocus
                       />
                     </PopoverContent>
                   </Popover>
