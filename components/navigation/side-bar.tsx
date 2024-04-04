@@ -1,75 +1,112 @@
 "use client";
 
-import { IoHomeSharp } from "react-icons/io5";
-import { FaListCheck } from "react-icons/fa6";
-import { FaCheck } from "react-icons/fa";
-import { FaClipboardList } from "react-icons/fa";
-import Link from "next/link";
+import { motion, useAnimationControls } from "framer-motion";
 import { useSelectedLayoutSegment } from "next/navigation";
+import { useEffect, useState } from "react";
 
-import { cn } from "@/lib/utils";
-import { ThemeToggle } from "../theme/ThemeToggle";
-import { LogoutButton } from "../auth/logout-button";
+import { NavigationItems } from "./navigation-items";
+import NavigationLink from "./navigation-link";
 
-const navigationList = [
-  {
-    label: "All Tasks",
-    icon: <IoHomeSharp className="h-5 w-5" />,
-    path: "/dashboard",
-    targetSegment: null,
+const containerVariants = {
+  close: {
+    width: "5rem",
+    transition: {
+      type: "spring",
+      damping: 15,
+      duration: 0.5,
+    },
   },
-  {
-    label: "Important",
-    icon: <FaListCheck className="h-5 w-5" />,
-    path: "/dashboard/important",
-    targetSegment: "important",
+  open: {
+    width: "16rem",
+    transition: {
+      type: "spring",
+      damping: 15,
+      duration: 0.5,
+    },
   },
-  {
-    label: "Completed",
-    icon: <FaCheck className="h-5 w-5" />,
-    path: "/dashboard/completed",
-    targetSegment: "completed",
+};
+
+const svgVariants = {
+  close: {
+    rotate: 360,
   },
-  {
-    label: "Do It Today",
-    icon: <FaClipboardList className="h-5 w-5" />,
-    path: "/dashboard/today",
-    targetSegment: "today",
+  open: {
+    rotate: 180,
   },
-];
+};
 
 export const SideBar = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const activeSegment = useSelectedLayoutSegment();
 
+  const containerControls = useAnimationControls();
+  const svgControls = useAnimationControls();
+
+  useEffect(() => {
+    if (isOpen) {
+      containerControls.start("open");
+      svgControls.start("open");
+    } else {
+      containerControls.start("close");
+      svgControls.start("close");
+    }
+  }, [isOpen]);
+
+  const handleOpenClose = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <div className="w-full bg-primary-foreground items-center flex border rounded-xl shadow-md py-4 h-full flex-col">
-      <div className="flex items-center h-full w-full">
-        <nav className="w-full">
-          <ol className="space-y-2">
-            {navigationList.map((navigation, index) => (
-              <li
-                key={index}
-                className={cn(
-                  activeSegment === navigation.targetSegment &&
-                    "dark:bg-card bg-slate-200 border-r-4 border-emerald-500 rounded-r-lg"
-                )}
-              >
-                <Link
-                  href={navigation.path}
-                  className="flex flex-row items-center gap-5 py-2 px-4"
-                >
-                  {navigation.icon}
-                  <span className="hidden md:flex">{navigation.label}</span>
-                </Link>
-              </li>
-            ))}
-          </ol>
-        </nav>
-      </div>
-      <div className="flex flex-col items-center mb-2 ">
-        <ThemeToggle />
-        <LogoutButton />
-      </div>
-    </div>
+    <>
+      <motion.nav
+        variants={containerVariants}
+        animate={containerControls}
+        initial="close"
+        className="md:flex hidden bg-primary-foreground flex-col gap-20 p-5 h-full shadow shadow-neutral-600"
+      >
+        <div className="flex flex-row w-full justify-between place-items-center">
+          <div className="truncate font-bold text-xl text-primary">
+            Task Master
+          </div>
+          <button
+            className="p-1 rounded-full flex"
+            onClick={() => handleOpenClose()}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1}
+              stroke="currentColor"
+              className="w-8 h-8 stroke-neutral-200"
+            >
+              <motion.path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                variants={svgVariants}
+                animate={svgControls}
+                d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+                transition={{
+                  duration: 0.5,
+                  ease: "easeInOut",
+                }}
+              />
+            </svg>
+          </button>
+        </div>
+        <div className="flex flex-col gap-3">
+          {NavigationItems.map((navigation, index) => (
+            <NavigationLink
+              name={navigation.label}
+              path={navigation.path}
+              isTarget={activeSegment === navigation.targetSegment}
+              key={index}
+            >
+              {navigation.icon}
+            </NavigationLink>
+          ))}
+        </div>
+      </motion.nav>
+    </>
   );
 };
